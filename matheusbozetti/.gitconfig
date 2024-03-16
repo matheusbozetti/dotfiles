@@ -3,9 +3,18 @@
 [push]
         autoSetupRemote = true
 [core]
+	pager = delta
         filemode = false
         autocrlf = false
         eol = lf
+[interactive]
+	diffFilter = delta --color-only
+[delta]
+    navigate = true
+[diff]
+    colorMoved = default
+[merge]
+    conflictstyle = diff3
 [alias]
     s = !git status -s
     c = !git add --all && git commit -m
