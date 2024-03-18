@@ -140,3 +140,6 @@ esac
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
 PATH=~/.console-ninja/.bin:$PATH
+
+# MacOS change XDG_CONFIG_HOME to ~/.config
+export XDG_CONFIG_HOME="$HOME/.config"
