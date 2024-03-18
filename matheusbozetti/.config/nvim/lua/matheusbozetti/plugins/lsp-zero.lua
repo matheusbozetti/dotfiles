@@ -10,8 +10,8 @@ return {
 
     -- Autocompletion
     { 'hrsh7th/nvim-cmp' }, -- Required
-    { 'hrsh8th/cmp-nvim-lsp' }, -- Required
-    { 'L4MON4D3/LuaSnip' }, -- Required
+    { 'hrsh7th/cmp-nvim-lsp' }, -- Required
+    { 'L3MON4D3/LuaSnip' }, -- Required
   },
   config = function()
     local lsp_zero = require('lsp-zero')
@@ -19,9 +19,27 @@ return {
     lsp_zero.on_attach(function(_, bufnr)
       local opts = { buffer = bufnr, remap = false }
 
-      vim.keymap.set('n', 'ge', '<cmd>lua vim.diagnostic.open_float()<cr>', opts, { desc = { 'Open diagnostics' } })
+      local function addDesc(desc, localOpts)
+        return vim.tbl_extend('force', localOpts, { desc = desc })
+      end
 
-      vim.keymap.set('n', '<leader>ca', vim.lsp.buf.code_action, opts)
+      vim.keymap.set('n', 'ge', '<cmd>lua vim.diagnostic.open_float()<cr>', addDesc('Open [E]rror diagnostic', opts))
+
+      vim.keymap.set('n', '<leader>ca', vim.lsp.buf.code_action, addDesc('[C]ode [A]ction', opts))
+
+      vim.keymap.set('n', 'gd', '<cmd>lua vim.lsp.buf.definition()<cr>', addDesc('[G]oto [D]efinition', opts))
+      vim.keymap.set('n', 'gD', '<cmd>lua vim.lsp.buf.declaration()<cr>', addDesc('[G]oto [D]eclaration', opts))
+      vim.keymap.set('n', 'gI', '<cmd>lua vim.lsp.buf.implementation()<cr>', addDesc('[G]oto [I]mplementation', opts))
+      vim.keymap.set(
+        'n',
+        'go',
+        '<cmd>lua vim.lsp.buf.type_definition()<cr>',
+        addDesc('[G]oto [O]ther [D]efinition', opts)
+      )
+      vim.keymap.set('n', 'gr', '<cmd>lua vim.lsp.buf.references()<cr>', addDesc('[G]oto [R]eferences', opts))
+
+      vim.keymap.set('n', '[d', '<cmd>lua vim.diagnostic.goto_prev()<cr>', addDesc('[D]iagnostic [P]rev', opts))
+      vim.keymap.set('n', ']d', '<cmd>lua vim.diagnostic.goto_next()<cr>', addDesc('[D]iagnostic [N]ext', opts))
 
       lsp_zero.default_keymaps(opts)
     end)
@@ -40,6 +58,7 @@ return {
       'eslint',
       'prettier',
       'typescript-language-server',
+      'vue-language-server',
       'golangci-lint',
       'goimports',
     })
