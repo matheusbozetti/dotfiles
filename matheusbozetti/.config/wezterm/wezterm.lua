@@ -6,10 +6,10 @@ if wezterm.config_builder then
 	config = wezterm.config_builder()
 end
 
-config.color_scheme = "Catppuccin Mocha"
+config.color_scheme = "rose-pine"
 config.window_background_opacity = 0.8
 config.font = wezterm.font_with_fallback({
-	{ family = "FantasqueSansM Nerd Font", scale = 1.3 },
+	{ family = "Hasklug Nerd Font", scale = 1.26 },
 })
 config.window_padding = {
 	left = 0,
