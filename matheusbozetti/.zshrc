@@ -18,6 +18,7 @@ alias tbdc="cd ~/Projects/tbdc/"
 alias pn=pnpm
 alias zr='source ~/.zshrc'
 
+alias vim='nvim'
 alias n='nvim'
 
 # Set name of the theme to load --- if set to "random", it will

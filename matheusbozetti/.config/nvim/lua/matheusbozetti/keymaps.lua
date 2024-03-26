@@ -14,6 +14,7 @@ vimSetKeymap('n', '<leader>s', [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Le
 
 vimSetKeymap('n', '<C-l>', ':bnext<CR>', { desc = 'Next buffer' })
 vimSetKeymap('n', '<C-h>', ':bprev<CR>', { desc = 'Previous buffer' })
+vimSetKeymap('n', '<leader>q', ':bd<CR>', { desc = 'Close current buffer' })
 
 vimSetKeymap('n', '<M-j>', ':resize -4<CR>', { desc = 'Resize window down' })
 vimSetKeymap('n', '<M-k>', ':resize +4<CR>', { desc = 'Resize window up' })
