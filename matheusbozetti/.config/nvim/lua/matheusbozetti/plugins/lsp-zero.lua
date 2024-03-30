@@ -61,6 +61,8 @@ return {
       'vue-language-server',
       'golangci-lint',
       'goimports',
+      'clangd',
+      'cpplint',
     })
 
     require('mason-tool-installer').setup({ ensure_installed = ensure_installed })
@@ -128,7 +130,7 @@ return {
         { name = 'path', max_item_count = 5 },
       },
       experimental = {
-        ghost_text = true,
+        ghost_text = false,
       },
       window = {
         completion = cmp.config.window.bordered(),

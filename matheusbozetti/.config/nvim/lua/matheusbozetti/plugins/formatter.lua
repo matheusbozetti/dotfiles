@@ -11,11 +11,22 @@ return {
       javascript = { { 'prettier', 'prettierd' } },
       typescript = { { 'prettier', 'prettierd' } },
       vue = { { 'prettier', 'prettierd' } },
+      c = { 'clang-format' },
+      cpp = { 'clang-format' },
+      objc = { 'clang-format' },
+      objcpp = { 'clang-format' },
     }
 
     local format_on_save = {
       lsp_fallback = true,
       async = false,
+    }
+
+    conform.formatters.clang_format = {
+      exe = 'clang-format',
+      args = { '--style=file' },
+      stdin = true,
+      cwd = vim.fn.getcwd(),
     }
 
     conform.setup({

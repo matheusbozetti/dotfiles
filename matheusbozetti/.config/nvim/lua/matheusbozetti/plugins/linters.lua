@@ -7,7 +7,10 @@ return {
     lint.linters_by_ft = {
       javascript = { 'eslint' },
       javascriptreact = { 'eslint' },
-      -- vue = { 'eslint' },
+      c = { 'cpplint' },
+      cpp = { 'cpplint' },
+      objc = { 'cpplint' },
+      objcpp = { 'cpplint' },
     }
 
     vim.api.nvim_create_autocmd({ 'BufEnter', 'BufWritePost' }, {

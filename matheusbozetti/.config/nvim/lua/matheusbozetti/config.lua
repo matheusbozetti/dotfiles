@@ -16,7 +16,10 @@ vim.opt.number = true
 --  Experiment for yourself to see if you like it!
 vim.opt.relativenumber = true
 
-vim.opt.smartindent = true
+vim.opt.smartindent = false
+vim.opt.expandtab = true
+-- vim.opt.tabstop = 2
+vim.opt.shiftwidth = 4
 
 vim.opt.wrap = false
 
@@ -83,5 +86,23 @@ vim.api.nvim_create_autocmd('TextYankPost', {
   group = vim.api.nvim_create_augroup('highlight-yank', { clear = true }),
   callback = function()
     vim.highlight.on_yank()
+  end,
+})
+
+vim.api.nvim_create_autocmd('InsertEnter', {
+  pattern = '*',
+  callback = function()
+    vim.diagnostic.config({
+      virtual_text = true,
+    })
+  end,
+})
+vim.api.nvim_create_autocmd('InsertLeave', {
+  pattern = '*',
+  callback = function()
+    print('leaveme')
+    vim.diagnostic.config({
+      virtual_text = true,
+    })
   end,
 })

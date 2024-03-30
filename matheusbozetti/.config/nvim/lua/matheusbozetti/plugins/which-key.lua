@@ -10,6 +10,7 @@ return { -- Useful plugin to show you pending keybinds.
     require('which-key').register({
       ['<leader>c'] = { name = '[C]ode', _ = 'which_key_ignore' },
       ['<leader>w'] = { name = '[W]orkspace', _ = 'which_key_ignore' },
+      ['<leader>t'] = { name = '[T]erminal', _ = 'which_key_ignore' },
     })
   end,
 }
