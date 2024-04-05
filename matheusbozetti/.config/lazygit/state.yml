@@ -1,13 +1,14 @@
 lastupdatecheck: 0
 recentrepos:
-- /Users/matheusbozetti/dotfiles
-- /Users/matheusbozetti/Projects/tbdc/integration-bayer
-- /Users/matheusbozetti/Projects/tbdc/field-view-import-job
-- /Users/matheusbozetti/Projects/tbdc/vue-plugin
-- /Users/matheusbozetti/Projects/tbdc/auth-guard
-- /Users/matheusbozetti/Projects/tbdc/millennium
-- /Users/matheusbozetti/Projects/tbdc/consultoria
-- /Users/matheusbozetti/Projects/tbdc/geracao-demanda
+- /home/matheusbozetti/dotfiles
+- /home/matheusbozetti/Projects/tbdc/consultoria
+- /home/matheusbozetti/Projects/tbdc/integration-bayer
+- /home/matheusbozetti/Projects/tbdc/auth-guard
+- /home/matheusbozetti/Projects/tbdc/business-plan
+- /home/matheusbozetti/Projects/tbdc/geracao-demanda
+- /home/matheusbozetti/Projects/tbdc/produtor
 startuppopupversion: 5
-customcommandshistory: []
+customcommandshistory:
+- qa
 hidecommandlog: false
+ignorewhitespaceindiffview: false

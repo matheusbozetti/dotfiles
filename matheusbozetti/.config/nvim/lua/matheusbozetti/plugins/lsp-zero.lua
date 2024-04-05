@@ -1,3 +1,15 @@
+local augroup = vim.api.nvim_create_augroup('LspFormatting', {})
+local lsp_format_on_save = function(bufnr)
+  vim.api.nvim_clear_autocmds({ group = augroup, buffer = bufnr })
+  vim.api.nvim_create_autocmd('BufWritePre', {
+    group = augroup,
+    buffer = bufnr,
+    callback = function()
+      vim.lsp.buf.format()
+    end,
+  })
+end
+
 return {
   'VonHeikemen/lsp-zero.nvim',
   branch = 'v3.x',
@@ -18,6 +30,7 @@ return {
 
     lsp_zero.on_attach(function(_, bufnr)
       local opts = { buffer = bufnr, remap = false }
+      lsp_zero.preset('recommended')
 
       local function addDesc(desc, localOpts)
         return vim.tbl_extend('force', localOpts, { desc = desc })
@@ -42,6 +55,7 @@ return {
       vim.keymap.set('n', ']d', '<cmd>lua vim.diagnostic.goto_next()<cr>', addDesc('[D]iagnostic [N]ext', opts))
 
       lsp_zero.default_keymaps(opts)
+      lsp_format_on_save(bufnr)
     end)
 
     require('mason').setup()
@@ -59,9 +73,11 @@ return {
       'prettier',
       'typescript-language-server',
       'vue-language-server',
+      'volar',
       'golangci-lint',
       'goimports',
       'clangd',
+      'clang-format',
       'cpplint',
     })
 
@@ -71,14 +87,40 @@ return {
     local root_dir = util.root_pattern('package.json', 'tsconfig.json', '.git') or vim.loop.cwd()
 
     require('mason-lspconfig').setup({
-      ensure_installed = {},
+      ensure_installed = {
+        'volar',
+      },
       handlers = {
         lsp_zero.default_setup,
         tsserver = function()
+          local vue_typescript_plugin = require('mason-registry').get_package('vue-language-server'):get_install_path()
+            .. '/node_modules/@vue/language-server'
+            .. '/node_modules/@vue/typescript-plugin'
+
           require('lspconfig').tsserver.setup({
             root_dir = root_dir,
-            filetypes = { 'typescript', 'vue', 'javascript', 'typescriptreact', 'javascriptreact' },
+            init_options = {
+              plugins = {
+                {
+                  name = '@vue/typescript-plugin',
+                  location = vue_typescript_plugin,
+                  languages = { 'javascript', 'typescript', 'vue' },
+                },
+              },
+            },
+            filetypes = {
+              'javascript',
+              'javascriptreact',
+              'javascript.jsx',
+              'typescript',
+              'typescriptreact',
+              'typescript.tsx',
+              'vue',
+            },
           })
+        end,
+        volar = function()
+          require('lspconfig').volar.setup({})
         end,
       },
       opts = {

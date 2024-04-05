@@ -9,7 +9,7 @@ end
 config.color_scheme = "rose-pine"
 config.window_background_opacity = 0.8
 config.font = wezterm.font_with_fallback({
-	{ family = "Hasklug Nerd Font", scale = 1.26 },
+	{ family = "Hasklug Nerd Font", scale = 1.10 },
 })
 config.window_padding = {
 	left = 0,
