@@ -39,7 +39,6 @@ return { -- Adds git related signs to the gutter, as well as utilities for manag
         end)
         return '<Ignore>'
       end, { expr = true })
-      print('OPENED')
 
       -- Actions
       map('n', '<leader>gp', gs.preview_hunk_inline, { desc = 'Preview git hunk inline' })

@@ -11,7 +11,7 @@ return {
       -- REQUIRED
 
       vim.keymap.set('n', '<leader>a', function()
-        harpoon:list():append()
+        harpoon:list():add()
       end, { desc = '[A]ppend buffer to Harpoon' })
 
       vim.keymap.set('n', '<C-e>', function()
