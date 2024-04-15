@@ -1,13 +1,7 @@
-local augroup = vim.api.nvim_create_augroup('LspFormatting', {})
-local lsp_format_on_save = function(bufnr)
-  vim.api.nvim_clear_autocmds({ group = augroup, buffer = bufnr })
-end
-
 local default_installed = {
   -- lua
   'stylua',
   'lua-language-server',
-  'luacheck',
   -- json
   'jsonlint',
   -- javascript & typescript
@@ -34,6 +28,7 @@ return {
   dependencies = {
     -- LSP Support
     { 'neovim/nvim-lspconfig' }, -- Required
+    { 'lukas-reineke/lsp-format.nvim' }, -- Required
     { 'williamboman/mason.nvim' }, -- Optional
     { 'williamboman/mason-lspconfig.nvim' }, -- Optional
     { 'WhoIsSethDaniel/mason-tool-installer.nvim' },
@@ -46,7 +41,7 @@ return {
   config = function()
     local lsp_zero = require('lsp-zero')
 
-    lsp_zero.on_attach(function(_, bufnr)
+    lsp_zero.on_attach(function(client, bufnr)
       local opts = { buffer = bufnr, remap = false }
       lsp_zero.preset('recommended')
 
@@ -73,8 +68,25 @@ return {
       vim.keymap.set('n', ']d', '<cmd>lua vim.diagnostic.goto_next()<cr>', addDesc('[D]iagnostic [N]ext', opts))
 
       lsp_zero.default_keymaps(opts)
-      lsp_format_on_save(bufnr)
+
+      if client.supports_method('textDocument/formatting') then
+        require('lsp-format').on_attach(client)
+      end
     end)
+
+    lsp_zero.format_on_save({
+      format_opts = {
+        async = false,
+        timeout_ms = 10000,
+      },
+    })
+
+    lsp_zero.set_sign_icons({
+      error = '✘',
+      warn = '▲',
+      hint = '⚑',
+      info = '»',
+    })
 
     require('mason').setup()
 
@@ -98,6 +110,9 @@ return {
       },
       handlers = {
         lsp_zero.default_setup,
+        function(server_name)
+          require('lspconfig')[server_name].setup({})
+        end,
         tsserver = function()
           local vue_typescript_plugin = require('mason-registry').get_package('vue-language-server'):get_install_path()
             .. '/node_modules/@vue/language-server'
@@ -172,8 +187,8 @@ return {
       }),
       sources = {
         { name = 'nvim_lsp' },
-        { name = 'luasnip', max_item_count = 5 },
         { name = 'buffer', max_item_count = 5 },
+        { name = 'luasnip', max_item_count = 5 },
         { name = 'codeium.nvim', max_item_count = 5 },
         { name = 'path', max_item_count = 5 },
       },
