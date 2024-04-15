@@ -63,7 +63,7 @@ vim.opt.splitbelow = true
 --  See `:help 'list'`
 --  and `:help 'listchars'`
 vim.opt.list = true
-vim.opt.listchars = { tab = '» ', trail = '·', nbsp = '␣' }
+vim.opt.listchars = { tab = '  ', trail = '·', nbsp = '␣' }
 
 -- Preview substitutions live, as you type!
 vim.opt.inccommand = 'split'
@@ -82,34 +82,34 @@ vim.opt.incsearch = true
 
 -- Highlight on Yank
 vim.api.nvim_create_autocmd('TextYankPost', {
-    desc = 'Highlight when yanking (copying) text',
-    group = vim.api.nvim_create_augroup('highlight-yank', { clear = true }),
-    callback = function()
-        vim.highlight.on_yank()
-    end,
+  desc = 'Highlight when yanking (copying) text',
+  group = vim.api.nvim_create_augroup('highlight-yank', { clear = true }),
+  callback = function()
+    vim.highlight.on_yank()
+  end,
 })
 
 vim.api.nvim_create_autocmd('InsertEnter', {
-    pattern = '*',
-    callback = function()
-        vim.diagnostic.config({
-            virtual_text = true,
-        })
-    end,
+  pattern = '*',
+  callback = function()
+    vim.diagnostic.config({
+      virtual_text = true,
+    })
+  end,
 })
 vim.api.nvim_create_autocmd('InsertLeave', {
-    pattern = '*',
-    callback = function()
-        vim.diagnostic.config({
-            virtual_text = true,
-        })
-    end,
+  pattern = '*',
+  callback = function()
+    vim.diagnostic.config({
+      virtual_text = true,
+    })
+  end,
 })
 
 vim.diagnostic.config({
-    virtual_text = true,
-    underline = true,
-    signs = true,
-    update_in_insert = true,
-    severity_sort = false,
+  virtual_text = true,
+  underline = true,
+  signs = true,
+  update_in_insert = true,
+  severity_sort = false,
 })

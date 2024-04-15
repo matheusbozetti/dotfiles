@@ -5,6 +5,8 @@ return {
     local lint = require('lint')
 
     lint.linters_by_ft = {
+      lua = { 'luacheck' },
+      json = { 'jsonlint' },
       javascript = { 'eslint' },
       javascriptreact = { 'eslint' },
       typescript = { 'eslint' },
@@ -13,6 +15,7 @@ return {
       cpp = { 'cpplint' },
       objc = { 'cpplint' },
       objcpp = { 'cpplint' },
+      go = { 'golangcilint' },
     }
 
     vim.api.nvim_create_autocmd({ 'BufEnter', 'BufWritePost' }, {

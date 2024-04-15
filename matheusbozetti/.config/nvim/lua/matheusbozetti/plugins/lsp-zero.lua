@@ -3,6 +3,31 @@ local lsp_format_on_save = function(bufnr)
   vim.api.nvim_clear_autocmds({ group = augroup, buffer = bufnr })
 end
 
+local default_installed = {
+  -- lua
+  'stylua',
+  'lua-language-server',
+  'luacheck',
+  -- json
+  'jsonlint',
+  -- javascript & typescript
+  'eslint',
+  'prettier',
+  'typescript-language-server',
+  'vue-language-server',
+  'volar',
+  -- c & c++
+  'clangd',
+  'clang-format',
+  'cpplint',
+  -- golang
+  'gopls',
+  'gofumpt',
+  'golines',
+  'golangci-lint',
+  'goimports',
+}
+
 return {
   'VonHeikemen/lsp-zero.nvim',
   branch = 'v3.x',
@@ -59,21 +84,7 @@ return {
 
     local ensure_installed = vim.tbl_keys(servers or {})
 
-    vim.list_extend(ensure_installed, {
-      'stylua', -- Used to format lua code
-      'lua-language-server',
-      'eslint',
-      'prettier',
-      'typescript-language-server',
-      'vue-language-server',
-      'volar',
-      'golangci-lint',
-      'goimports',
-      'gopls',
-      'clangd',
-      'clang-format',
-      'cpplint',
-    })
+    vim.list_extend(ensure_installed, default_installed)
 
     require('mason-tool-installer').setup({ ensure_installed = ensure_installed })
 
