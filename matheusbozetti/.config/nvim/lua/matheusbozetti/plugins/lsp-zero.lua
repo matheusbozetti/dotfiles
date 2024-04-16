@@ -76,7 +76,15 @@ return {
       lsp_format_on_save(bufnr)
     end)
 
-    require('mason').setup()
+    require('mason').setup({
+      ui = {
+        icons = {
+          package_installed = '✓',
+          package_uninstalled = '✗',
+          package_pending = '⟳',
+        },
+      },
+    })
 
     local servers = {
       lua_ls = {},
@@ -89,7 +97,6 @@ return {
     require('mason-tool-installer').setup({ ensure_installed = ensure_installed })
 
     local root_pattern = require('lspconfig.util').root_pattern
-    local util = require('lspconfig.util')
     local root_dir = root_pattern('package.json', 'tsconfig.json', '.git')
 
     require('mason-lspconfig').setup({
@@ -110,7 +117,7 @@ return {
                 {
                   name = '@vue/typescript-plugin',
                   location = vue_typescript_plugin,
-                  languages = { 'javascript', 'typescript', 'vue' },
+                  languages = { 'vue' },
                 },
               },
             },
@@ -185,5 +192,12 @@ return {
         documentation = cmp.config.window.bordered(),
       },
     })
+
+    -- Add Signs to LSP Info
+    local signs = { Error = '', Warn = '', Hint = '󰌵', Info = '󰋼' }
+    for type, icon in pairs(signs) do
+      local hl = 'DiagnosticSign' .. type
+      vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
+    end
   end,
 }

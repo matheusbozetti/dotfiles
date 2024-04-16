@@ -5,12 +5,7 @@ return {
     local lint = require('lint')
 
     lint.linters_by_ft = {
-      lua = { 'luacheck' },
       json = { 'jsonlint' },
-      javascript = { 'eslint' },
-      javascriptreact = { 'eslint' },
-      typescript = { 'eslint' },
-      typescriptreact = { 'eslint' },
       c = { 'cpplint' },
       cpp = { 'cpplint' },
       objc = { 'cpplint' },
@@ -27,5 +22,11 @@ return {
     vim.keymap.set('n', '<leader>cl', function()
       lint.try_lint()
     end, { desc = 'Lint the current file' })
+
+    vim.api.nvim_create_autocmd('BufWritePre', {
+      pattern = { '*.tsx', '*.ts', '*.jsx', '*.js', '*.vue' },
+      command = 'silent! EslintFixAll',
+      group = vim.api.nvim_create_augroup('MyAutocmdsJavaScripFormatting', {}),
+    })
   end,
 }

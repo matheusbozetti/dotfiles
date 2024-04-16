@@ -1,3 +1,6 @@
+--- Function to chose color theme
+--@param color string | '"rose-pine"' | '"catppuccin-mocha"' | '"tokyonight-night"'
+--@return nil
 function ColorMe(color)
   -- color = color or 'catppuccin-mocha'
   -- color = color or 'tokyonight-night'
