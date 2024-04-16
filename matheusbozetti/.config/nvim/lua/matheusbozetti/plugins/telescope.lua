@@ -28,7 +28,18 @@ return {
           require('telescope.themes').get_dropdown(),
         },
       },
-      defaults = { file_ignore_patterns = { 'node_modules/*', '.git/*', '.vscode/*', 'dist/*' } },
+      defaults = {
+        file_ignore_patterns = { 'node_modules/*', '.git/*', '.vscode/*', 'dist/*' },
+        path_display = { 'truncate' },
+        sorting_strategy = 'ascending',
+        layout_config = {
+          horizontal = { prompt_position = 'top', preview_width = 0.6 },
+          vertical = { mirror = false },
+          width = 0.87,
+          height = 0.8,
+          preview_cutoff = 120,
+        },
+      },
     })
 
     -- Enable telescope extensions, if they are installed

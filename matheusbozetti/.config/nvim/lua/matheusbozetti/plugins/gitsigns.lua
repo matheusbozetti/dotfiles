@@ -4,11 +4,15 @@ return { -- Adds git related signs to the gutter, as well as utilities for manag
     current_line_blame = true,
     max_file_length = 10000, -- Disable if file is longer than this (in lines)
     signs = {
-      add = { text = '+' },
-      change = { text = '~' },
-      delete = { text = '-' },
+      add = { text = '' },
+      change = { text = '' },
+      delete = { text = '' },
       topdelete = { text = '‾' },
       changedelete = { text = '~' },
+      ignore = { text = '◌' },
+      rename = { text = '➜' },
+      conflict = { text = '' },
+      untracked = { text = '★' },
     },
     on_attach = function(bufnr)
       local gs = package.loaded.gitsigns
