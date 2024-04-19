@@ -2,7 +2,7 @@
 [Auth]
   Endpoint = "http://localhost:3030"
   LastLogin = 0001-01-01T00:00:00Z
-  Token = "token"
+  Token = "1841e7b6-6fcd-488e-9f86-231699c680a7"
   Username = ""
 
 [Environment]

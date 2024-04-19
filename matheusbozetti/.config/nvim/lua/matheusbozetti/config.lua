@@ -19,7 +19,7 @@ vim.opt.relativenumber = true
 vim.opt.smartindent = false
 vim.opt.expandtab = true
 -- vim.opt.tabstop = 2
-vim.opt.shiftwidth = 4
+vim.opt.shiftwidth = 2
 
 vim.opt.wrap = false
 

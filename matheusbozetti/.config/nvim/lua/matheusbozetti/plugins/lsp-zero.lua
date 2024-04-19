@@ -7,6 +7,7 @@ local default_installed = {
   -- javascript & typescript
   'eslint',
   'prettier',
+  'biome',
   'typescript-language-server',
   'vue-language-server',
   'volar',
@@ -21,6 +22,17 @@ local default_installed = {
   'golangci-lint',
   'goimports',
 }
+
+local function hasBiome(path)
+  local util = require('lspconfig.util')
+  local rootPath = util.root_pattern('biome.json', 'biome.jsonc')(path)
+
+  if rootPath == nil then
+    return false
+  end
+
+  return true
+end
 
 return {
   'VonHeikemen/lsp-zero.nvim',
@@ -150,6 +162,39 @@ return {
         volar = function()
           require('lspconfig').volar.setup({})
         end,
+        eslint = function()
+          if hasBiome(vim.fn.getcwd()) == true then
+            return
+          end
+
+          require('lspconfig').eslint.setup({})
+        end,
+        biome = function()
+          if hasBiome(vim.fn.getcwd()) == false then
+            return
+          end
+          local util = require('lspconfig.util')
+
+          require('lspconfig').biome.setup({
+            default_config = {
+              cmd = { 'biome', 'lsp-proxy', 'check', '--apply' },
+              filetypes = {
+                'javascript',
+                'javascriptreact',
+                'json',
+                'jsonc',
+                'typescript',
+                'typescript.tsx',
+                'typescriptreact',
+                'astro',
+                'svelte',
+                'vue',
+              },
+              root_dir = util.root_pattern('biome.json', 'biome.jsonc'),
+              single_file_support = false,
+            },
+          })
+        end,
       },
       opts = {
         auto_install = true,
@@ -167,7 +212,9 @@ return {
           luasnip.lsp_expand(args.body)
         end,
       },
-      completion = { completeopt = 'menu,menuone,noinsert' },
+      completion = {
+        completeopt = 'menu,menuone,noinsert',
+      },
       mapping = cmp.mapping.preset.insert({
         -- Select the [n]ext item
         ['<C-n>'] = cmp.mapping.select_next_item(),
