@@ -21,6 +21,8 @@ local default_installed = {
   'golines',
   'golangci-lint',
   'goimports',
+  -- rust
+  'rust-analyzer',
 }
 
 local function hasBiome(path)
@@ -32,6 +34,12 @@ local function hasBiome(path)
   end
 
   return true
+end
+
+local navicAttach = function(navic, client, bufnr)
+  if client.server_capabilities.documentSymbolProvider then
+    navic.attach(client, bufnr)
+  end
 end
 
 return {
@@ -123,6 +131,8 @@ return {
     local root_pattern = require('lspconfig.util').root_pattern
     local root_dir = root_pattern('package.json', 'tsconfig.json', '.git')
 
+    local navic = require('nvim-navic')
+
     require('mason-lspconfig').setup({
       ensure_installed = {
         'volar',
@@ -130,7 +140,11 @@ return {
       handlers = {
         lsp_zero.default_setup,
         function(server_name)
-          require('lspconfig')[server_name].setup({})
+          require('lspconfig')[server_name].setup({
+            on_attach = function(client, bufnr)
+              navicAttach(navic, client, bufnr)
+            end,
+          })
         end,
         tsserver = function()
           local vue_typescript_plugin = require('mason-registry').get_package('vue-language-server'):get_install_path()
@@ -156,7 +170,11 @@ return {
               'typescriptreact',
               'typescript.tsx',
               'vue',
+              'svelte',
             },
+            on_attach = function(client, bufnr)
+              navicAttach(navic, client, bufnr)
+            end,
           })
         end,
         volar = function()
@@ -167,7 +185,11 @@ return {
             return
           end
 
-          require('lspconfig').eslint.setup({})
+          require('lspconfig').eslint.setup({
+            on_attach = function(client, bufnr)
+              navicAttach(navic, client, bufnr)
+            end,
+          })
         end,
         biome = function()
           if hasBiome(vim.fn.getcwd()) == false then
@@ -193,6 +215,10 @@ return {
               root_dir = util.root_pattern('biome.json', 'biome.jsonc'),
               single_file_support = false,
             },
+            format_on_save = true,
+            on_attach = function(client, bufnr)
+              navicAttach(navic, client, bufnr)
+            end,
           })
         end,
       },

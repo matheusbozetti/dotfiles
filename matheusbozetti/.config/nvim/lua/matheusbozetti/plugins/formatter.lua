@@ -32,6 +32,7 @@ return {
       typescript = biomeOrPrettier,
       typescriptreact = biomeOrPrettier,
       vue = biomeOrPrettier,
+      svelte = biomeOrPrettier,
     }
 
     local format_on_save = {

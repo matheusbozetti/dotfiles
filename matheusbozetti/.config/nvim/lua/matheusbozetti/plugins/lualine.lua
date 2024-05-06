@@ -24,6 +24,15 @@ return {
         globalstatus = true,
         disabled_filetypes = { statusline = { 'dashboard', 'alpha', 'starter' } },
       },
+      winbar = {
+        lualine_c = {
+          {
+            'navic',
+            color_correction = nil,
+            navic_opts = nil,
+          },
+        },
+      },
       sections = {
         lualine_a = { 'mode' },
         lualine_b = { 'branch' },
@@ -36,21 +45,21 @@ return {
           { 'filename', path = 1, padding = { left = 2, right = 2 } },
         },
         lualine_x = {
-            -- stylua: ignore
-            {
-              function() return require("noice").api.status.command.get() end,
-              cond = function() return package.loaded["noice"] and require("noice").api.status.command.has() end,
-            },
-            -- stylua: ignore
-            {
-              function() return require("noice").api.status.mode.get() end,
-              cond = function() return package.loaded["noice"] and require("noice").api.status.mode.has() end,
-            },
-            -- stylua: ignore
-            {
-              function() return "  " .. require("dap").status() end,
-              cond = function () return package.loaded["dap"] and require("dap").status() ~= "" end,
-            },
+          -- stylua: ignore
+          {
+            function() return require("noice").api.status.command.get() end,
+            cond = function() return package.loaded["noice"] and require("noice").api.status.command.has() end,
+          },
+          -- stylua: ignore
+          {
+            function() return require("noice").api.status.mode.get() end,
+            cond = function() return package.loaded["noice"] and require("noice").api.status.mode.has() end,
+          },
+          -- stylua: ignore
+          {
+            function() return "  " .. require("dap").status() end,
+            cond = function() return package.loaded["dap"] and require("dap").status() ~= "" end,
+          },
           {
             require('lazy.status').updates,
             cond = require('lazy.status').has_updates,

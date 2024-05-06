@@ -17,6 +17,8 @@ alias matheus="cd ~/Projects/matheus/"
 alias tbdc="cd ~/Projects/tbdc/"
 alias pn=pnpm
 alias zr='source ~/.zshrc'
+alias devf='pnpm dev:frontend'
+alias devb='pnpm dev:backend'
 
 alias vim='nvim'
 alias n='nvim .'
@@ -116,3 +118,7 @@ PATH=~/.console-ninja/.bin:$PATH
 # MacOS change XDG_CONFIG_HOME to ~/.config
 export XDG_CONFIG_HOME="$HOME/.config"
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+source $HOME/.cargo/env
+export PATH="/opt/homebrew/opt/php@7.4/bin:$PATH"
+export PATH="/opt/homebrew/opt/php@7.4/sbin:$PATH"
