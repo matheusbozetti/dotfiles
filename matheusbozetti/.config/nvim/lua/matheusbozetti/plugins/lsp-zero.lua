@@ -44,7 +44,7 @@ end
 
 return {
   'VonHeikemen/lsp-zero.nvim',
-  branch = 'v3.x',
+  branch = 'v4.x',
   dependencies = {
     -- LSP Support
     { 'neovim/nvim-lspconfig' }, -- Required
@@ -97,6 +97,7 @@ return {
     lsp_zero.format_on_save({
       format_opts = {
         async = false,
+        stop_after_first = true,
         timeout_ms = 10000,
       },
     })
@@ -146,12 +147,12 @@ return {
             end,
           })
         end,
-        tsserver = function()
+        ts_ls = function()
           local vue_typescript_plugin = require('mason-registry').get_package('vue-language-server'):get_install_path()
             .. '/node_modules/@vue/language-server'
             .. '/node_modules/@vue/typescript-plugin'
 
-          require('lspconfig').tsserver.setup({
+          require('lspconfig').ts_ls.setup({
             root_dir = root_dir,
             init_options = {
               plugins = {

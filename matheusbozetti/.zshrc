@@ -12,6 +12,8 @@ export ZSH="$HOME/.oh-my-zsh"
 
 alias kubectl="minikube kubectl --"
 alias lg="lazygit"
+alias ls="lsd"
+alias du="dust"
 alias ld="lazydocker"
 alias matheus="cd ~/Projects/matheus/"
 alias tbdc="cd ~/Projects/tbdc/"
@@ -22,6 +24,8 @@ alias devb='pnpm dev:backend'
 
 alias vim='nvim'
 alias n='nvim .'
+
+alias clearNodeModules="find ~/Projects -name 'node_modules' -type d -prune -print -exec rm -rf '{}' +"
 
 alias clk='~/clk.sh'
 
@@ -122,3 +126,11 @@ export XDG_CONFIG_HOME="$HOME/.config"
 source $HOME/.cargo/env
 export PATH="/opt/homebrew/opt/php@7.4/bin:$PATH"
 export PATH="/opt/homebrew/opt/php@7.4/sbin:$PATH"
+
+
+# Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
+export PATH="$PATH:$HOME/.rvm/bin"
+
+if [ -z "$TMUX" ]; then
+  exec tmux new-session -c "$PWD"
+fi

@@ -4,7 +4,7 @@ return {
   config = function()
     local toggleterm = require('toggleterm')
     toggleterm.setup({
-      direction = 'float',
+      direction = 'horizontal',
     })
 
     vim.keymap.set({ 'n', 't' }, '<M-t>', function()

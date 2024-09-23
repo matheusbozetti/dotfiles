@@ -7,7 +7,7 @@ local function biomeOrPrettier(bufnr)
     return { 'biome' }
   end
 
-  return { { 'prettierd', 'prettier' } }
+  return { { 'prettierd', 'prettier', stop_after_first = true } }
 end
 return {
   'stevearc/conform.nvim',
@@ -19,12 +19,12 @@ return {
 
     local formatters_by_ft = {
       lua = { 'stylua' },
-      python = { 'isort', 'black' },
+      python = { 'isort', 'black', stop_after_first = true },
       c = { 'clang-format' },
       cpp = { 'clang-format' },
       objc = { 'clang-format' },
       objcpp = { 'clang-format' },
-      go = { 'goimports', 'gofumpt', 'golines' },
+      go = { 'goimports', 'gofumpt', 'golines', stop_after_first = true },
       json = { 'jsonlint' },
       jsonc = { 'jsonlint' },
       javascript = biomeOrPrettier,
@@ -38,6 +38,7 @@ return {
     local format_on_save = {
       lsp_fallback = true,
       async = false,
+      stop_after_first = true,
     }
 
     conform.formatters.clang_format = {
@@ -67,6 +68,7 @@ return {
       log_level = vim.log.levels.DEBUG,
       formatters_by_ft = formatters_by_ft,
       format_on_save = format_on_save,
+      stop_after_first = true,
       on_attach = function(client, bufnr)
         if client.supported_methods('textDocument/formatting') then
           -- local has_biome_lsp = vim.lsp.get_active_clients({
@@ -85,6 +87,7 @@ return {
               conform.format({
                 lsp_fallback = true,
                 async = false,
+                stop_after_first = true,
               })
             end,
           })
@@ -93,6 +96,7 @@ return {
             conform.format({
               lsp_fallback = true,
               async = false,
+              stop_after_first = true,
             })
           end, { desc = 'Format file or range (in visual mode)' })
         end
