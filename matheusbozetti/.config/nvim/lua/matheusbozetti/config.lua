@@ -93,7 +93,8 @@ vim.api.nvim_create_autocmd('InsertEnter', {
   pattern = '*',
   callback = function()
     vim.diagnostic.config({
-      virtual_text = true,
+      -- virtual_text = true, -- TODO: check if it works, change to false in favor of lsp_lines
+      virtual_text = false,
     })
   end,
 })
@@ -101,13 +102,15 @@ vim.api.nvim_create_autocmd('InsertLeave', {
   pattern = '*',
   callback = function()
     vim.diagnostic.config({
-      virtual_text = true,
+      -- virtual_text = true, -- TODO: check if it works, change to false in favor of lsp_lines
+      virtual_text = false,
     })
   end,
 })
 
 vim.diagnostic.config({
-  virtual_text = true,
+  -- virtual_text = true, -- TODO: check if it works, change to false in favor of lsp_lines
+  virtual_text = false,
   underline = true,
   signs = true,
   update_in_insert = true,

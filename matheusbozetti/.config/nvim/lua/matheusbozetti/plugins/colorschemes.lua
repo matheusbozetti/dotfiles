@@ -41,4 +41,17 @@ return {
     priority = 1000,
     opts = {},
   },
+  { 'Everblush/nvim', name = 'everblush' },
+  {
+    'sho-87/kanagawa-paper.nvim',
+    lazy = false,
+    priority = 1000,
+    opts = {},
+  },
+  {
+    'rebelot/kanagawa.nvim',
+    lazy = false,
+    priority = 1000,
+    opts = {},
+  },
 }
