@@ -23,6 +23,11 @@ return {
   },
   config = function()
     require('telescope').setup({
+      pickers = {
+        colorscheme = {
+          enable_preview = true,
+        },
+      },
       extensions = {
         ['ui-select'] = {
           require('telescope.themes').get_dropdown(),
@@ -55,15 +60,23 @@ return {
       ':Telescope find_files find_command=rg,--ignore,--hidden,--files,-u<CR>',
       { desc = '[F]ind ALL [F]iles (Even Hidden)' }
     )
+    vim.keymap.set(
+      'n',
+      '<leader>fd',
+      ':Telescope find_files find_command=fd,--type,d<CR>',
+      { desc = '[F]ind [D]irectory' }
+    )
     vim.keymap.set('n', '<leader>fs', builtin.builtin, { desc = '[F]ind [S]elect Telescope' })
     vim.keymap.set('v', '<leader>fw', builtin.grep_string, { desc = '[F]ind current [W]ord' })
     vim.keymap.set('n', '<leader>fw', builtin.live_grep, { desc = '[F]ind by [G]rep' })
     vim.keymap.set('n', '<leader>fg', builtin.git_files, { desc = '[F]ind in [G]it' })
     vim.keymap.set('n', '<leader>fk', builtin.keymaps, { desc = '[F]ind [K]eymaps' })
-    vim.keymap.set('n', '<leader>fd', builtin.diagnostics, { desc = '[F]ind [D]iagnostics' })
+    vim.keymap.set('n', '<leader>ft', builtin.diagnostics, { desc = '[F]ind Diagnos[t]ics' })
     vim.keymap.set('n', '<leader>fr', builtin.resume, { desc = '[F]ind [R]esume' })
     vim.keymap.set('n', '<leader>f.', builtin.oldfiles, { desc = '[F]ind Recent Files ("." for repeat)' })
     vim.keymap.set('n', '<leader><leader>', builtin.buffers, { desc = '[ ] Find existing buffers' })
+    vim.keymap.set('n', '<leader>fc', builtin.colorscheme, { desc = '[C] Find Colorschemes' })
+    vim.keymap.set('n', '<leader>fv', builtin.lsp_document_symbols, { desc = '[V] Find Variables (Symbols)' })
 
     -- Slightly advanced example of overriding default behavior and theme
     vim.keymap.set('n', '<leader>/', function()

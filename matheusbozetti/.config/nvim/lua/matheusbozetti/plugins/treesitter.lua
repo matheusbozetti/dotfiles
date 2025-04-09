@@ -9,6 +9,7 @@ return { -- Highlight, edit, and navigate code
         'bash',
         'javascript',
         'typescript',
+        'odin',
         'c',
         'css',
         'scss',

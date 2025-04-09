@@ -7,7 +7,7 @@ return {
       direction = 'horizontal',
     })
 
-    vim.keymap.set({ 'n', 't' }, '<M-t>', function()
+    vim.keymap.set({ 'n', 't' }, '<C-`>', function()
       toggleterm.toggle()
     end, {
       desc = '[T]erminal [T]oggle',

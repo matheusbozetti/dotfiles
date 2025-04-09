@@ -23,6 +23,10 @@ local default_installed = {
   'goimports',
   -- rust
   'rust-analyzer',
+  --odin
+  'ols',
+  --zig
+  'zls',
 }
 
 local function hasBiome(path)
@@ -59,40 +63,43 @@ return {
     { 'L3MON4D3/LuaSnip' }, -- Required
   },
   config = function()
+    vim.opt.signcolumn = 'yes'
+
     local lsp_zero = require('lsp-zero')
 
-    lsp_zero.on_attach(function(client, bufnr)
-      local opts = { buffer = bufnr, remap = false }
-      lsp_zero.preset('recommended')
+    local lspconfig_defaults = require('lspconfig').util.default_config
+    lspconfig_defaults.capabilities =
+      vim.tbl_deep_extend('force', lspconfig_defaults.capabilities, require('cmp_nvim_lsp').default_capabilities())
 
-      local function addDesc(desc, localOpts)
-        return vim.tbl_extend('force', localOpts, { desc = desc })
-      end
+    vim.api.nvim_create_autocmd('LspAttach', {
+      desc = 'LSP actions',
+      callback = function(event)
+        local opts = { buffer = event.buf }
 
-      vim.keymap.set('n', 'ge', '<cmd>lua vim.diagnostic.open_float()<cr>', addDesc('Open [E]rror diagnostic', opts))
+        local function addDesc(desc, localOpts)
+          return vim.tbl_extend('force', localOpts, { desc = desc })
+        end
+        vim.keymap.set('n', 'ge', '<cmd>lua vim.diagnostic.open_float()<cr>', addDesc('Open [E]rror diagnostic', opts))
 
-      vim.keymap.set('n', '<leader>ca', vim.lsp.buf.code_action, addDesc('[C]ode [A]ction', opts))
+        vim.keymap.set('n', '<leader>ca', vim.lsp.buf.code_action, addDesc('[C]ode [A]ction', opts))
 
-      vim.keymap.set('n', 'gd', '<cmd>lua vim.lsp.buf.definition()<cr>', addDesc('[G]oto [D]efinition', opts))
-      vim.keymap.set('n', 'gD', '<cmd>lua vim.lsp.buf.declaration()<cr>', addDesc('[G]oto [D]eclaration', opts))
-      vim.keymap.set('n', 'gI', '<cmd>lua vim.lsp.buf.implementation()<cr>', addDesc('[G]oto [I]mplementation', opts))
-      vim.keymap.set(
-        'n',
-        'go',
-        '<cmd>lua vim.lsp.buf.type_definition()<cr>',
-        addDesc('[G]oto [O]ther [D]efinition', opts)
-      )
-      vim.keymap.set('n', 'gr', '<cmd>lua vim.lsp.buf.references()<cr>', addDesc('[G]oto [R]eferences', opts))
+        vim.keymap.set('n', 'gd', '<cmd>lua vim.lsp.buf.definition()<cr>', addDesc('[G]oto [D]efinition', opts))
+        vim.keymap.set('n', 'gD', '<cmd>lua vim.lsp.buf.declaration()<cr>', addDesc('[G]oto [D]eclaration', opts))
+        vim.keymap.set('n', 'gI', '<cmd>lua vim.lsp.buf.implementation()<cr>', addDesc('[G]oto [I]mplementation', opts))
+        vim.keymap.set(
+          'n',
+          'go',
+          '<cmd>lua vim.lsp.buf.type_definition()<cr>',
+          addDesc('[G]oto [O]ther [D]efinition', opts)
+        )
+        vim.keymap.set('n', 'gr', '<cmd>lua vim.lsp.buf.references()<cr>', addDesc('[G]oto [R]eferences', opts))
 
-      vim.keymap.set('n', '[d', '<cmd>lua vim.diagnostic.goto_prev()<cr>', addDesc('[D]iagnostic [P]rev', opts))
-      vim.keymap.set('n', ']d', '<cmd>lua vim.diagnostic.goto_next()<cr>', addDesc('[D]iagnostic [N]ext', opts))
+        vim.keymap.set('n', '[d', '<cmd>lua vim.diagnostic.goto_prev()<cr>', addDesc('[D]iagnostic [P]rev', opts))
+        vim.keymap.set('n', ']d', '<cmd>lua vim.diagnostic.goto_next()<cr>', addDesc('[D]iagnostic [N]ext', opts))
 
-      lsp_zero.default_keymaps(opts)
-
-      if client.supports_method('textDocument/formatting') then
-        require('lsp-format').on_attach(client)
-      end
-    end)
+        lsp_zero.default_keymaps(opts)
+      end,
+    })
 
     lsp_zero.format_on_save({
       format_opts = {

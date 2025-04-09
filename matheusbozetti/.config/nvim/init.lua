@@ -16,4 +16,4 @@ require('lazy').setup({
 
 -- Applies the colorscheme and transparency
 -- lua/matheusbozetti/colors.lua
-ColorMe()
+ColorMe('rose-pine-moon')

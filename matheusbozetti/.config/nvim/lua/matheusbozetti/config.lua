@@ -18,8 +18,9 @@ vim.opt.relativenumber = true
 
 vim.opt.smartindent = false
 vim.opt.expandtab = true
--- vim.opt.tabstop = 2
-vim.opt.shiftwidth = 2
+vim.opt.tabstop = 4
+vim.opt.shiftwidth = 4
+vim.bo.softtabstop = 2
 
 vim.opt.wrap = false
 
@@ -106,6 +107,11 @@ vim.api.nvim_create_autocmd('InsertLeave', {
       virtual_text = false,
     })
   end,
+})
+
+vim.api.nvim_create_autocmd({ 'BufRead', 'BufNewFile' }, {
+  pattern = '*.gohtml',
+  command = 'set filetype=html',
 })
 
 vim.diagnostic.config({

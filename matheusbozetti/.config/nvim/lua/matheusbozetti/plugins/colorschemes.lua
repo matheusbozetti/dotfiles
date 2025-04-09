@@ -1,5 +1,10 @@
 return {
   {
+    'navarasu/onedark.nvim',
+    name = 'onedark',
+    config = {},
+  },
+  {
     'catppuccin/nvim',
     name = 'catppuccin',
     priority = 1000,
@@ -35,13 +40,6 @@ return {
       })
     end,
   },
-  {
-    'folke/tokyonight.nvim',
-    lazy = false,
-    priority = 1000,
-    opts = {},
-  },
-  { 'Everblush/nvim', name = 'everblush' },
   {
     'sho-87/kanagawa-paper.nvim',
     lazy = false,
